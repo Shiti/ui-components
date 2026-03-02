@@ -1,16 +1,21 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
+import { fileURLToPath } from 'node:url'
+
 import type { StorybookConfig } from '@storybook/react-webpack5'
-import path from 'path'
+import path, { dirname } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(tsx)', '../docs/*.mdx'],
   addons: [
-    'storybook-addon-mock',
+    '@espoc/storybook-addon-mock',
     {
       name: '@storybook/addon-docs',
       options: { transcludeMarkdown: true },
     },
     '@storybook/addon-webpack5-compiler-swc',
-    './addons/button',
   ],
   framework: {
     name: '@storybook/react-webpack5',
