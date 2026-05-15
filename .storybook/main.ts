@@ -43,8 +43,29 @@ const config: StorybookConfig = {
   webpackFinal: async (config) => {
     config.experiments = {
       ...config.experiments,
-      asyncWebAssembly: true,
+      asyncWebAssembly: false,
       syncWebAssembly: false,
+    }
+
+    config.module = config.module ?? { rules: [] }
+    config.module.rules = config.module.rules ?? []
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: 'asset/resource',
+    })
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      include: /node_modules\/@perspective-dev/,
+      use: {
+        loader: 'ts-loader',
+        options: { transpileOnly: true },
+      },
+    })
+
+    config.resolve = config.resolve ?? {}
+    config.resolve.extensionAlias = {
+      ...config.resolve.extensionAlias,
+      '.js': ['.ts', '.js'],
     }
 
     return config
